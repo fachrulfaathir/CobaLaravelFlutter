@@ -9,4 +9,16 @@ use Illuminate\Database\Eloquent\Model;
 class Transactions extends Model
 {
    protected $table = 'transactions';
+
+   public function transactionDetails()
+   {
+       return $this->hasMany(TransactionDetails::class, 'transactions_id', 'id');
+   }
+
+   public function user()
+   {
+       return $this->belongsTo(User::class, 'users_id', 'id');
+   }
+
+   
 }

@@ -14,4 +14,19 @@ class TransactionDetails extends Model
         'user_id',
         'quantity',
     ];
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transactions::class, 'transactions_id', 'id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'products_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }
