@@ -101,7 +101,17 @@ class UserController extends Controller
         $user = Auth::user();
         $user->update($data);
         return ResponseFormatter::success($user, 'Profile updated');
-        
+
+    }
+
+    public function logout (Request $request)
+    {
+        $token = $request->user()->currentAccessToken();
+
+        if ($token instanceof \Laravel\Sanctum\PersonalAccessToken) {
+            $token->delete();
+        }
+        return ResponseFormatter::success($token, 'Token revoked');
     }
 
 }
