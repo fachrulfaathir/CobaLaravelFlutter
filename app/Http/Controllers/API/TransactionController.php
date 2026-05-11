@@ -32,7 +32,7 @@ class TransactionController extends Controller
               }
            }
         
-        $transaction = Transactions::with('transactionDetails.product')->where('users_id', Auth::user()->id);
+        $transaction = Transactions::with('transactionDetails.products')->where('users_id', Auth::user()->id);
         
         if($status){
             $transaction->where('status', $status);
@@ -47,11 +47,10 @@ class TransactionController extends Controller
     public function checkout(Request $request)
     {
         $request->validate([
-            'transactions_details' => 'required|array',
-            'transactions_details.*.id' => 'exists:products,id',
+            'transactionDetails' => 'required|array',
+            'transactionDetails.*.id' => 'exists:products,id',
             'total_price' => 'required',
             'total_shipping' => 'required',
-            'payment' => 'required|string',
             'address' => 'required|string|max:255',
             'status' => 'required|string|in:PENDING,SUCCESS,FAILED,CANCELED,SHIPPING,SHIPPED',
         ]);
@@ -66,7 +65,7 @@ class TransactionController extends Controller
         ]);
 
        
-        foreach($request->transactions_details as $detail) {
+        foreach($request->transactionDetails as $detail) {
                 $transaction->transactionDetails()->create([
                     'users_id' => Auth::user()->id,
                     'products_id' => $detail['id'],
@@ -76,10 +75,10 @@ class TransactionController extends Controller
             }
 
             return ResponseFormatter::success(
-                $transaction->load('transactionDetails.product'),
+                $transaction->load('transactionDetails.products'),
                 'Transaksi berhasil'
             );
-            
+
     }
 }
 

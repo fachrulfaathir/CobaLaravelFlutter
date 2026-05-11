@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionDetails extends Model
 {
-    protected $table = 'transaction_details';
+    protected $table = 'transactions_detail';
 
     protected $fillable = [
         'transactions_id',
         'products_id',
-        'user_id',
+        'users_id',
         'quantity',
     ];
 
