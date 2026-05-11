@@ -20,7 +20,7 @@ class TransactionDetails extends Model
         return $this->belongsTo(Transactions::class, 'transactions_id', 'id');
     }
 
-    public function product()
+    public function products()
     {
         return $this->belongsTo(Product::class, 'products_id', 'id');
     }
